@@ -14,5 +14,5 @@ document.getElementById("input--selector-travelingSalesperson")
 })
 document.getElementById("input--selector-geneticAlgorithm")
 .addEventListener("click", (e) => {
-    project.src = "genetic-algorithm/index.html";
+    project.src = "genetic-algorithm/index.html"
 })

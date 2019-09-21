@@ -16,7 +16,6 @@ function setup() {
     bestPath = order.slice();
     var d = calcDistance(order);
     shortest = d;
-    console.log(shortest);
 }
 
 function draw() {
