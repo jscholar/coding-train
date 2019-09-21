@@ -1,0 +1,18 @@
+body {
+    height: 100vh;
+}
+
+.project-container {
+    height: 100%;
+    width: 100%;
+}
+
+.project {
+    height: 100%;
+    width: 100%;
+    border: none;
+}
+
+.navbar {
+    height: 50px;
+}

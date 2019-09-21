@@ -60,7 +60,6 @@ function heuristic(a, b) {
 }
 
 function setup() {
-    console.log('A*');
     createCanvas(600, 600);
     frameRate(500);
     w = width / (cols + 1);
@@ -129,13 +128,14 @@ function draw() {
     }
     openSet.forEach(node => node.show(color(255, 0, 0)));
     closedSet.forEach(node => node.show(color(0, 255, 0)));
+    grid.forEach(row => {
+        row.forEach(node => {
+            if (node !== start && !node.wall)
+                node.drawPath();
+        })
+    })
     if (openSet.size == 0) {
         noLoop();
-        grid.forEach(row => {
-            row.forEach(node => {
-                if (node !== start && !node.wall)
-                    node.drawPath();
-            })
-        })
+
     }
 }
