@@ -14,7 +14,7 @@ class Population {
         this.ascended = false;
         this.generations = 1;
         this.population = [];
-        this.genePool = [];
+        this.totalFitness;
         this.target = target;
         this.mutationRate = mutationRate;
 
@@ -30,41 +30,42 @@ class Population {
      * Generates gene pool for selecting parents in next generation.
      */
     evaluateFitness() {
-        let totalScore = 0;
+        this.totalFitness = 0;
         for (let i = 0; i < this.population.length; i++) {
-            let fitness = this.population[i].calcFitness(this.target);
-            if (fitness >= this.best.fitness) this.best = this.population[i];
-            if (fitness === this.target.length) this.ascended = true;
-            totalScore += fitness;
+            this.population[i].calcFitness(this.target);
+            if (this.population[i].fitness >= this.best.fitness) this.best = this.population[i];
+            if (this.population[i].fitness == 1) this.ascended = true;
+            this.totalFitness += this.population[i].fitness;
         }
-        this.averageFitness = totalScore / this.population.length;
-    }
-
-    selection() {
-        this.genePool = [];
-        for (let i = 0; i < this.population.length; i++) {
-            let fitness = map(this.population[i].fitness, 0, this.best.fitness, 0, 1);
-            let n = floor(fitness * 100);
-            for (let j = 0; j < n; j++) {
-                this.genePool.push(this.population[i]);
-            }
-        }
+        this.averageFitness = this.totalFitness / this.population.length;
     }
 
     /**
      * Creates next generation from gene pool.
      */
-    nextPop() {
+    selection() {
+        let nextPopulation = []
         for (let i = 0; i < this.population.length; i++) {
-            let a = floor(random(this.genePool.length));
-            let b = floor(random(this.genePool.length));
-            let parentA = this.genePool[a];
-            let parentB = this.genePool[b];
+            let parentA = this.acceptReject();
+            let parentB = this.acceptReject();
             let child = parentA.crossover(parentB);
-            child.mutate(this.mutationRate);
-            this.population[i] = child;
+            child.mutate(this.mutationRate, this.target);
+            nextPopulation.push(child);
         }
+        this.population = nextPopulation;
         this.generations++;
+    }
+
+    acceptReject() {
+        let r = random(this.totalFitness);
+        let index = 0;
+        while (r > 0) {
+            r -= this.population[index].fitness;
+            index++;
+        }
+        index--;
+        console.log(index);
+        return this.population[index];
     }
 
     allPhrases() {
@@ -85,6 +86,6 @@ class Population {
     }
 
     getAverage() {
-        return this.averageFitness / this.target.length;
+        return this.averageFitness;
     }
 }

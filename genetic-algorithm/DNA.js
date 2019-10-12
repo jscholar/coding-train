@@ -20,11 +20,15 @@ class DNA {
      * @param {string} target Compares similarities between genes and target and returns fitness score.
      */
     calcFitness(target) {
+        let score = 0;
         for (let i = 0; i < target.length; i++) {
-            if (this.genes[i] == target[i]) this.fitness++;
+            if (this.genes[i] == target[i]) score++;
         }
+        this.fitness = score / target.length;
+        this.fitness = pow(this.fitness, 2);
         return this.fitness;
     }
+
 
     mutate(mutationRate) {
         for (let i = 0; i < this.genes.length; i++) {

@@ -16,7 +16,6 @@ function draw() {
     if (!pop.ascended) {
         pop.evaluateFitness();
         pop.selection();
-        pop.nextPop();
         let best = pop.best.asPhrase();
         bestPhrase.html("Best phrase:<br>" + best);
         displayInfo();
