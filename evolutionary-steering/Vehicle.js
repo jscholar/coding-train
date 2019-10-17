@@ -1,8 +1,9 @@
-function Vehicle(x, y,dna) {
+function Vehicle(x, y, dna) {
 
-    this.dna;
+    this.dna = dna || new DNA();
 
-    this.health = 200;
+    this.fitness = 1;
+    this.health = this.dna.maxHealth;
     this.alive = true;
 
     this.lastAcc = createVector(0,0);
@@ -24,18 +25,23 @@ function Vehicle(x, y,dna) {
         this.position.add(this.velocity);
         
         // energy expenditure
-        this.health -= 0.5 + pow(this.acceleration.mag(), 1.5); 
+        this.health -= 1.0 //+ pow(this.acceleration.mag(), 1.2); 
         
         // Reset acceleration;
         this.lastAcc = this.acceleration.copy();
         this.acceleration.mult(0);
         if (this.health <= 0) this.alive = false;
         constrain(this.health, 0, 100);
+
+        this.fitness *= 1.01;
     }
 
     this.behaviors = function(good, bad) {
-        let steerG = this.eat(good, 10);
-        let steerB = this.eat(bad, -50);
+        let steerG = this.eat(good, 70);
+        let steerB = this.eat(bad, -500);
+
+        steerG = this.dna.behave(steerG, "good");
+        steerB = this.dna.behave(steerB, "bad");
 
         this.applyForce(steerG);
         this.applyForce(steerB);
@@ -86,7 +92,7 @@ function Vehicle(x, y,dna) {
         // health spectrum
         let gr = color(0, 255, 0);
         let rd = color(255, 0, 0);
-        let col = lerpColor(rd, gr, this.health / 100.0);
+        let col = lerpColor(rd, gr, this.health / this.dna.maxHealth);
         fill(col);
     
         push();
