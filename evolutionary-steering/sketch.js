@@ -9,7 +9,7 @@ var prevStats;
 
 function setup() {
 
-    createCanvas(1500, 1500);
+    createCanvas(1000, 1000);
 
     population = new Population(popSize, radius);
     env = new Environment(radius);
