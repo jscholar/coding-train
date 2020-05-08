@@ -1,18 +1,22 @@
-var project = document.querySelector(".project");
+const project = document.querySelector('.project');
+const navbar = document.querySelector('.navbar')
+const projects = {
+    'astar-algorithm': 'A(Star) Algorithm',
+    'maze-generator': 'Maze Generator',
+    'traveling-salesperson': 'Traveling Salesman',
+    'genetic-algorithm': 'Genetic Algorithm',
+    'basic-steering': 'Basic steering',
+    'evolutionary-steering': 'Evolutionary Steering',
+};
 
-document.getElementById("input--selector-aStar")
-.addEventListener("click", (e) => {
-    project.src = "astar-algorithm/index.html";
-})
-document.getElementById("input--selector-mazeGenerator")
-.addEventListener("click", (e) => {
-    project.src = "maze-generator/index.html";
-})
-document.getElementById("input--selector-travelingSalesperson")
-.addEventListener("click", (e) => {
-    project.src = "traveling-salesperson/index.html";
-})
-document.getElementById("input--selector-geneticAlgorithm")
-.addEventListener("click", (e) => {
-    project.src = "genetic-algorithm/index.html"
-})
+Object.entries(projects).forEach(([id, name]) => {
+
+    const button = document.createElement('button');
+    button.id = id;
+    button.insertAdjacentText('afterbegin', name);
+    button.addEventListener('click', () => {
+        project.src = `${id}/index.html`;
+    })
+    navbar.insertAdjacentElement('beforeend', button);
+    
+});
