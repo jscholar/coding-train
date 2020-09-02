@@ -1,5 +1,5 @@
 const project = document.querySelector('.project');
-const navbar = document.querySelector('.navbar')
+const navbar = document.querySelector('.navbar');
 const projects = {
     'astar-algorithm': 'A(Star) Algorithm',
     'maze-generator': 'Maze Generator',
@@ -15,7 +15,7 @@ Object.entries(projects).forEach(([id, name]) => {
     button.id = id;
     button.insertAdjacentText('afterbegin', name);
     button.addEventListener('click', () => {
-        project.src = `${id}/index.html`;
+        project.src = `${PATHS.pages}/${id}/index.html`;
     })
     navbar.insertAdjacentElement('beforeend', button);
     

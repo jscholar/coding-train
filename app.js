@@ -13,7 +13,7 @@ let app = http.createServer((req, res) => {
             res.write(data);
             res.end();
         }
-    })
-})
+    });
+});
 
 app.listen(3000, 'localhost');
